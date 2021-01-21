@@ -1,0 +1,19 @@
+@import './colors';
+
+@mixin scrollbar {
+
+  ::-webkit-scrollbar {
+    width: 5px;
+
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px $darkblue;
+
+  }
+
+  ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 5px $lightblue;
+    // background-color: $blue;
+  }
+}

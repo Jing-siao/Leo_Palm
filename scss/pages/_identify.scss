@@ -1,0 +1,214 @@
+//--辨識頁-----------
+//閃爍動畫
+@keyframes glitch {
+
+  0%,
+  10%,
+  20%,
+  100% {
+    opacity: 1;
+  }
+
+  5%,
+  15%,
+  85% {
+    opacity: 0.85;
+  }
+
+}
+
+//掃描動畫
+@keyframes scan {
+
+  0%,
+  100% {
+    top: 4%;
+  }
+
+  50% {
+    top: 96%;
+  }
+
+}
+
+@mixin scanImg {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../../img/scan.png");
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: $textColor;
+  letter-spacing: 5px;
+  margin: auto;
+  // line-height: 500px;
+  font-size: 26px;
+  font-family: GenJyuuGothicX;
+}
+
+.identifyPage {
+  // border: 1px solid wheat;
+  padding: 30 15px;
+
+  .scanWrap {
+    margin: 0 auto;
+    position: relative;
+
+    div.scan {
+      // border: 1px solid red;
+      animation: glitch .7s infinite;
+
+      &:after {
+        position: absolute;
+        box-shadow: rgba(223, 206, 61, 0.75) 0 0 10px 3px;
+        background: rgb(223, 206, 61);
+        content: "";
+        height: 1px;
+        top: 20px;
+        animation: scan 2s infinite;
+      }
+
+      &:before {
+        content: "";
+        background-image: url("../../img/sacn-top.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+      }
+
+    }
+
+    div.scan,
+    div.result {
+      @include scanImg();
+
+      p {
+        font-family: GenJyuuGothicX;
+      }
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+    }
+
+
+
+  }
+
+
+}
+
+@media(min-width:992px) {
+
+  .scanWrap {
+    height: 515px;
+
+    div.scan,
+    div.result {
+      line-height: 515px;
+      font-size: 26px;
+
+      p {
+        font-size: 26px;
+      }
+    }
+
+    div.scan::after {
+      left: 22px;
+      width: 298px;
+    }
+
+
+
+    .mask {
+      width: 338px;
+      height: 515px;
+      background: linear-gradient(135deg, #10234d 32px, transparent 0) top left,
+        linear-gradient(-135deg, #122550 44px, transparent 0) top right,
+        linear-gradient(-45deg, #0f2450 32px, transparent 0) bottom right,
+        linear-gradient(45deg, #0f2450 26px, transparent 0) bottom left;
+    }
+  }
+}
+
+
+@media(max-width:991px)and(min-width:768px) {
+  .identifyPage {
+    max-width: 300px;
+
+    .scanWrap {
+      height: 430px;
+      width: 283px;
+      font-size: 24px;
+
+      div.scan,
+      div.result {
+        line-height: 430px;
+
+        p {
+          font-size: 24px;
+        }
+      }
+
+      div.scan::after {
+        left: 18px;
+        width: 248px;
+      }
+
+      .mask {
+        width: 283px;
+        height: 430px;
+        background: linear-gradient(135deg, #0d1f47 27px, transparent 0) top left,
+          linear-gradient(-135deg, #0d1f47 36px, transparent 0) top right,
+          linear-gradient(-45deg, #0d2761 26px, transparent 0) bottom right,
+          linear-gradient(45deg, #0d2761 21px, transparent 0) bottom left;
+      }
+    }
+  }
+}
+
+@media(max-width:767px) {
+  .identifyPage {
+    max-width: 270px;
+
+    .scanWrap {
+      height: 380px;
+      width: 250px;
+
+      div.scan,
+      div.result {
+        line-height: 380px;
+        font-size: 20px;
+
+        p {
+          font-size: 20px;
+        }
+      }
+
+      div.scan::after {
+        left: 16px;
+        width: 219px;
+      }
+
+      .mask {
+        height: 380px;
+        width: 250px;
+        background: linear-gradient(135deg, #0d1d3f 24px, transparent 0) top left,
+          linear-gradient(-135deg, #0d1d3f 31px, transparent 0) top right,
+          linear-gradient(-45deg, #0f2961 22px, transparent 0) bottom right,
+          linear-gradient(45deg, #0f2961 18px, transparent 0) bottom left;
+      }
+    }
+  }
+}

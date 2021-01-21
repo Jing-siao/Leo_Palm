@@ -1,0 +1,123 @@
+// @import '../../vendors/css/reset.css';
+@import'../mixins/colors';
+
+* {
+  padding: 0;
+
+  [v-cloak] {
+    display: none;
+  }
+
+}
+
+@font-face {
+  font-family: 'GenJyuuGothicX';
+  src: url(../../font/GenJyuuGothicX-Monospace-Regular.ttf) format('TrueType');
+}
+
+
+h1 {
+  font-size: 30px;
+  color: $textColor;
+  font-weight: 500;
+  margin-bottom: 50px;
+  text-align: center;
+  font-family: GenJyuuGothicX;
+  // border: 1px solid black;
+
+}
+
+h5 {
+  color: black;
+  font-size: 20px;
+  margin: 8px 0;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+h3 {
+  font-size: 24px;
+  margin: 15px 0;
+}
+
+p {
+  color: $lightblue;
+  padding: 5px;
+  font-family: GenJyuuGothicX;
+  font-size: 18px;
+
+  &.warning {
+    color: rgb(255, 103, 103);
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+input {
+  padding: 5px;
+  font-size: 16px;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  // display: block;
+}
+
+button {
+  margin-top: 50px;
+  width: 100%;
+  border: 2px solid $blue;
+  padding: 8px 20px;
+  border-radius: 8px;
+  color: $textColor;
+  font-size: 18px;
+  transition: all .3s ease;
+  text-shadow:
+    0 0 2px $darkblue,
+    0 0 2px $darkblue,
+    0 0 2px $darkblue,
+    0 0 2px $darkblue;
+  box-shadow: 1px 1px 5px $blue, -1px -1px 5px $blue;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+
+  &.submit:hover {
+    background: $lightblue;
+    color: black;
+    border: 2px solid $lightblue;
+    text-shadow: none;
+    box-shadow: 1px 1px 15px $lightblue, -1px -1px 15px $lightblue;
+
+  }
+
+  &.sending {
+    transition: all 1s ease;
+    cursor: default;
+
+  }
+
+  &.success {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background: $lightblue;
+    color: black;
+    border: 2px solid $lightblue;
+    text-shadow: none;
+    box-shadow: 1px 1px 15px $lightblue, -1px -1px 15px $lightblue;
+    cursor: default;
+    // margin: auto;
+  }
+
+}
+
+
+
+//--------------------------------------------
