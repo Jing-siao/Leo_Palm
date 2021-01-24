@@ -5,8 +5,8 @@ const signUp = {
         <form id="signUpForm" 
         @submit.prevent="signUpSubmit">
           <div class="animate-label" v-for="label in signUpLabels" :key="label.id">
-            <input :type="label.type" :id="label.id" required autocomplete="off" v-model="label.inputData" 
-              @change="verifyData(label)" />
+            <input :type="label.type" :id="label.id" required autocomplete="off" 
+              v-model="label.inputData" @change="verifyData(label)" />
             <label :for="label.id">{{label.title}}</label>
             <span></span>
             <p class="warning" v-if="!label.verifyInputData">{{label.warning}}</p>
