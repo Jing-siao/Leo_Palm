@@ -2,8 +2,7 @@ const signUp = {
   template: `
       <div class="signUpPage wrapBox">
         <h1>掌靜脈管理系統</h1>
-        <form id="signUpForm" 
-        @submit.prevent="signUpSubmit">
+        <form id="signUpForm" @submit.prevent="signUpSubmit">
           <div class="animate-label" v-for="label in signUpLabels" :key="label.id">
             <input :type="label.type" :id="label.id" required autocomplete="off" 
               v-model="label.inputData" @change="verifyData(label)" />
@@ -67,10 +66,14 @@ const signUp = {
           localStorage.setItem(signUpObj.id, JSON.stringify(signUpObj));
           alert("註冊成功");
           this.$router.push({ name: "home" });
-        } else if(signUpObj.id === isMember.id) 
-            alert("此身份證字號已註冊")
-          else
-            alert("請填寫正確的資料格式");
+      } else if(signUpObj.id === isMember.id) {
+          this.signUpLabels.forEach(item => {
+            item.inputData = "";
+            item.verifyInputData = true;
+        });
+          alert("此身份證字號已註冊")
+      } else 
+          alert("請填寫正確的資料格式");
     },
     verifyData(data) {
       let verifyId = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;

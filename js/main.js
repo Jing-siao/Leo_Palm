@@ -1,26 +1,29 @@
-// import '../node_modules/babel-polyfill/dist/polyfill.min.js';
+import router from "./router.js";
 
-import router from './router.js';
 new Vue({
-  el: '#app',
+  el: "#app",
   router,
   data: {
-    username: '國眾電腦',
-    logoSrc: './img/logo.png',
+    userName: "",
+    logoSrc: "./img/logo.png",
     loginOutState: false,
   },
   methods: {
-    loginOut() {
+    getUserName() {
+      if (localStorage.getItem("userName")) {
+        this.userName = localStorage.getItem("userName");
+        return (this.loginOutState = true);
+      } else return this.loginOutState;
+    },
+    logOut() {
+      localStorage.removeItem("userName");
       this.loginOutState = false;
     },
-    enter(el, done) {
-      window.setTimeout(() => {
-        el.alert("Hello!"), 1000
-      });
-      done();
-
-    },
   },
-
-
-})
+  beforeUpdate() {
+    this.getUserName();
+  },
+  created() {
+    this.getUserName();
+  },
+});

@@ -9,9 +9,6 @@ import identify from './pages/identify.js';
 import management from './pages/management.js';
 import search from './pages/search.js';
 
-
-
-
 const routes = [
   {
     name: 'home',
@@ -74,8 +71,6 @@ const routes = [
       sidebar
     },
   },
-
-
 ]
 
 const router = new VueRouter({

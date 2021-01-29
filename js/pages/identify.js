@@ -2,7 +2,7 @@ const identify = {
   template: `
       <div class="identifyPage wrapBox">
         <div class="scanWrap">
-          <div :class="{'scan':isScan,'result':isResult}">{{result}}
+          <div :class="{'scan':isScan,'result':isResult}">{{ result }}
           <p class=warning v-if="noResult">查無資料</p>
           </div>    
           <div class="mask"></div>
@@ -32,34 +32,26 @@ const identify = {
     }
   },
   methods: {
-    hasResult() {
+    idResult() {
+      const identifyUrl = "http://localhost:6102/PalmSecure/Client/Identify/all";
+      axios({
+        methods: "post",
+        url: identifyUrl,
+      }).then((response) => {
+          console.log(response);
+      }).catch((error) => {
+          console.log(error);
+      })
       setTimeout(() => {
         this.isResult = true;
         this.isScan = false;
-        this.result = 'A123456789';
+        this.result = '';
+        this.result !== "" ? (this.noResult = false) : (this.noResult = true);
       }, 3000);
     },
-    hasNoResult() {
-      setTimeout(() => {
-        this.isResult = true;
-        this.isScan = false;
-        this.noResult = true;
-        this.result = '';
-      }, 7000);
-    },
-    clear() {
-      setTimeout(() => {
-        this.isResult = false;
-        this.isScan = true;
-        this.result = '辨識中';
-      }, 4000);
-    }
-
   },
   mounted() {
-    this.hasResult();
-    this.clear();
-    this.hasNoResult();
+    this.idResult();
   }
 }
 export default identify;

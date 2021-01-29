@@ -1,3 +1,4 @@
+
 const create = {
   template: `
       <div class="createPage wrapBox">
@@ -16,12 +17,8 @@ const create = {
               class="labelRadio">{{select.text}}</label>
             </div>
           </div>
-          <p class="warning" v-if="warning">! 送出前請勿移動</p>
           <div class="center" v-if="sending">
-            <button :class="{'sending':isSending,'success':isSuccess}" @click.prevent>{{successText}}
-              <div class="spinner" v-if="showSending">傳送中
-                <div v-for="n in 3" :key="n"></div>
-              </div>
+            <button :class="{'sending':isSending,'success':isSuccess}" @click.prevent>{{successText}}      
             </button>
           </div>
           <button class="submit" v-else>送出</button>
@@ -34,7 +31,6 @@ const create = {
       userId: '',
       successText: '',
       sending: false,
-      showSending: true,
       isSending: true,
       isSuccess: false,
       warning: false,
@@ -55,11 +51,21 @@ const create = {
     }
   },
   methods: {
-
     createSubmit() {
       let userId = this.userId;
       let selected = this.selected;
-      userId && selected ? this.sandingState() : alert('請填寫所有欄位');
+      const createUrl = "http://localhost:6101/PalmSecure/Client/Enroll/";
+      axios({
+        method: "post",
+        url: createUrl,
+        params: { id: userId },
+      }).then((response) => {
+          userId && selected ? this.sandingState() : alert('請填寫所有欄位');
+          console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      })
+  
       // 驗證後回傳是否成功
 
       // this.$router.push({ path: `/create/${userId}` })
@@ -69,15 +75,14 @@ const create = {
       this.warning = true;
       setTimeout(() => {
         this.successState();
-      }, 3000);
+      });
       setTimeout(() => {
         this.resetState();
-      }, 4500);
+      }, 5000);
     },
     successState() {
       this.isSuccess = true;
       this.isSending = false;
-      this.showSending = false;
       this.successText = '成功';
       this.warning = false;
     },
@@ -86,7 +91,6 @@ const create = {
       this.selected = '';
       this.successText = '';
       this.sending = false;
-      this.showSending = true;
       this.isSending = true;
       this.isSuccess = false;
       this.warning = false;

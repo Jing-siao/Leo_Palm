@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>國眾電腦掌靜脈系統</title>
   <link rel="stylesheet" href="./vendors/css/reset.css">
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/main.css">
@@ -21,14 +21,13 @@
       </div>
       <div class="loginWrap">
         <div v-if="loginOutState">
-          <p>{{username}} 歡迎回來</p>
-          <router-link to="./" @click.prevent="loginOut">登出</router-link>
+          <p>{{userName}} 歡迎回來</p>
+          <router-link to="/" @click.native="logOut">登出</router-link>
         </div>
-        <div v-else>
-          <router-link to="/signUp">註冊</router-link>
-          <router-link to="/login">登入</router-link>
-
-        </div>
+          <div v-else>
+            <router-link to="/signUp">註冊</router-link>
+            <router-link to="/login">登入</router-link>
+          </div>
       </div>
     </header>
     <transition name="slide" mode="out-in">
@@ -44,6 +43,8 @@
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <!-- 引入主要js -->
   <script type="module" src="./js/main.js"></script>
+  <!-- 引入axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </body>
 

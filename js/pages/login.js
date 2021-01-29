@@ -2,8 +2,7 @@ const login = {
   template: `
       <div class="loginPage wrapBox">
         <h1>掌靜脈管理系統</h1>
-        <form id="loginForm" 
-        @submit.prevent="loginSubmit">
+        <form id="loginForm" @submit.prevent="loginSubmit">
           <div class="animate-label" v-for="label in loginLabels">
             <input :type="label.type" :id="label.id" required autocomplete="off" 
               v-model="label.inputData" @change="verifyData(label)" />
@@ -38,6 +37,7 @@ const login = {
       loginData: {
         id: "",
         password: "",
+        userName: "",
       },
     }
   },
@@ -45,17 +45,25 @@ const login = {
     loginSubmit() {
       var loginObj = this.loginData;
       var isMember = JSON.parse(localStorage.getItem(loginObj.id)) || [];
-      console.log(isMember)
       if(this.loginLabels.some(e => e.warning !== "")) 
         alert("請填寫正確的資料格式"); 
-      else if(loginObj.id !== isMember.id)
-        alert("此身分證字號未註冊")
-      else if(loginObj.password !== isMember.password) 
-        alert("密碼錯誤")
-      else {
+      else if(loginObj.id !== isMember.id) {
+          this.loginLabels.forEach(item => {
+            item.inputData = "";
+            item.verifyInputData = true;
+          });
+          alert("此身分證字號未註冊")
+      } else if(loginObj.password !== isMember.password) {
+          this.loginLabels.forEach(item => {
+            item.inputData = "";
+            item.verifyInputData = true;
+          });
+          alert("密碼錯誤")
+      } else {
+          localStorage.setItem("userName", isMember.userName)
           alert("登入成功")
-          this.$router.push({ name: 'home' }) // 登入成功後自動挑轉首頁
-        }
+          this.$router.push({ name: 'home' }) // 登入成功後自動跳轉首頁
+      }
     },
     verifyData(data) {
       let verifyId = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
