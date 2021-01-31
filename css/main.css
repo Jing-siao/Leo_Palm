@@ -376,6 +376,23 @@
   position: relative;
 }
 
+.identifyPage .scanWrap .startScan button {
+  width: 70%;
+  position: absolute;
+  top: 32%;
+  left: 15%;
+  z-index: 1;
+}
+
+.identifyPage .scanWrap .startScan button:hover {
+  border: 2px solid #65c6fd;
+  background-color: #65c6fd;
+  -webkit-box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
+          box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
+  color: black;
+  text-shadow: none;
+}
+
 .identifyPage .scanWrap div.scan {
   -webkit-animation: glitch .7s infinite;
           animation: glitch .7s infinite;
@@ -403,10 +420,12 @@
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: -1;
 }
 
 .identifyPage .scanWrap div.scan,
-.identifyPage .scanWrap div.result {
+.identifyPage .scanWrap div.result,
+.identifyPage .scanWrap div.startScan {
   width: 100%;
   height: 100%;
   background-size: contain;
@@ -423,7 +442,8 @@
 }
 
 .identifyPage .scanWrap div.scan p,
-.identifyPage .scanWrap div.result p {
+.identifyPage .scanWrap div.result p,
+.identifyPage .scanWrap div.startScan p {
   font-family: GenJyuuGothicX;
 }
 
@@ -879,6 +899,60 @@
   .searchPage .searchTable tr > td:first-child {
     display: none;
   }
+}
+
+.popOutPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popOutPage .popOutWrap {
+  border-radius: 10px;
+  width: 450px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  min-height: 100px;
+  height: auto;
+  text-align: center;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #65c6fd;
+  -webkit-box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
+          box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
+}
+
+.popOutPage .popOutWrap i {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #11367A;
+  padding: 6px;
+}
+
+.popOutPage .popOutWrap i:hover {
+  color: #ff6767;
+}
+
+.popOutPage .popOutWrap p {
+  color: black;
+  vertical-align: middle;
 }
 
 @font-face {

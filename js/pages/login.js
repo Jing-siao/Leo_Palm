@@ -1,3 +1,6 @@
+import popOut from '/js/popOut.js';
+Vue.component('popOut', popOut)
+
 const login = {
   template: `
       <div class="loginPage wrapBox">
@@ -11,11 +14,15 @@ const login = {
             <p class="warning" v-if="!label.verifyInputData">{{label.warning}}</p>
           </div>
           <button class="submit">登入</button>
-        </form>
+          <popOut :errMsg.sync="errMsg" v-if="verifyFail"></popOut>
+          </form>
       </div> 
       `,
   data() {
     return {
+      components: {
+        popOut
+      },
       loginLabels: [
         {
           title: "身份證字號",
@@ -39,31 +46,39 @@ const login = {
         password: "",
         userName: "",
       },
+      verifyFail: false,
+      errMsg: popOut.data().popOutText,
     }
   },
   methods: {
     loginSubmit() {
       var loginObj = this.loginData;
       var isMember = JSON.parse(localStorage.getItem(loginObj.id)) || [];
-      if(this.loginLabels.some(e => e.warning !== "")) 
-        alert("請填寫正確的資料格式"); 
+      if(this.loginLabels.some(e => e.warning !== "")) {
+        this.verifyFail = true;
+        this.errMsg = "請填寫正確的資料格式";
+      }
       else if(loginObj.id !== isMember.id) {
           this.loginLabels.forEach(item => {
             item.inputData = "";
             item.verifyInputData = true;
           });
-          alert("此身分證字號未註冊")
+          this.verifyFail = true;
+          this.errMsg = "此身分證字號未註冊";
       } else if(loginObj.password !== isMember.password) {
           this.loginLabels.forEach(item => {
             item.inputData = "";
             item.verifyInputData = true;
           });
-          alert("密碼錯誤")
+          this.verifyFail = true;
+          this.errMsg = "密碼錯誤";
       } else {
           localStorage.setItem("userName", isMember.userName)
+          this.verifyFail = false;
           alert("登入成功")
           this.$router.push({ name: 'home' }) // 登入成功後自動跳轉首頁
       }
+      // this.$emit('syncErrMsg', this.errMsg);
     },
     verifyData(data) {
       let verifyId = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
@@ -77,7 +92,7 @@ const login = {
           data.verifyInputData = false;
           data.warning = !verifyPassword.test(data.inputData) ? "密碼必須由6-12位字母、數字、特殊符號組成" : "";
       } 
-    }
+    },
   }
 }
 export default login;
