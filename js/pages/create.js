@@ -19,8 +19,7 @@ const create = {
             </div>
           </div>
           <div class="center" v-if="sending">
-            <button :class="{'sending':isSending,'success':isSuccess}" @click.prevent>{{resultText}}      
-            </button>
+            <button :class="{'sending':isSending,'success':isSuccess,'fail':isFail}" @click.prevent>{{ resultText }}</button>
           </div>
           <button class="submit" v-else>送出</button>
           <popOut v-if="verifyFail" :msg="errMsg" @showErrMsg="isPopOut"></popOut>
@@ -32,8 +31,9 @@ const create = {
       selected: "",
       userId: "",
       resultText: "",
+      isSending: false,
       sending: false,
-      isSending: true,
+      isFail: false,
       isSuccess: false,
       isId: false,
       verifyErrMsg: "",
@@ -67,24 +67,26 @@ const create = {
           .then((response) => {
             let parseData = JSON.parse(response.data);
             let resultData = parseData.wParam || parseData;
+            this.sandingState();
             switch (parseInt(resultData)) {
               case 0: {
-                this.sandingState();
                 this.resultText = "成功";
                 break;
               }
               case 1: {
-                this.sending = false;
-                this.verifyFail = true;
-                this.errMsg = "建檔狀態:取消";
+                this.isFail = true;
+                this.resultText = "已取消";
                 break;
               }
               case 2: {
-                this.sending = false;
-                this.errMsg = "建檔狀態:失敗";
+                this.isFail = true;
+                this.resultText = "失敗";
                 break;
               }
-              default: this.errMsg = "資料錯誤";
+              default: {
+                this.isFail = true;
+                this.resultText = "資料錯誤";
+              }
             }
           })
           .catch((error) => {
@@ -107,15 +109,16 @@ const create = {
     successState() {
       this.sending = true;
       this.isSuccess = true;
-      this.isSending = false;
+      this.isSending = true;
     },
     resetState() {
       this.userId = "";
       this.selected = "";
       this.resultText = "";
       this.sending = false;
-      this.isSending = true;
       this.isSuccess = false;
+      this.isFail = false;
+      this.isSending = true;
     },
     verifyId() {
       let verifyFormat = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;

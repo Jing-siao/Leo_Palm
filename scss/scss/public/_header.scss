@@ -1,0 +1,64 @@
+@import "./public";
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+
+
+  .logoWrap {
+    height: 70px;
+    display: inline-block;
+    // border: 1px solid wheat;
+
+    img {
+      // border: 1px solid wheat;
+      display: inline-block;
+      height: 100%;
+      opacity: .9;
+    }
+  }
+
+  .loginWrap {
+    // height: 38px;
+    display: inline-block;
+    // border: 1px solid wheat;
+    margin-top: 12px;
+
+    div {
+      // border: 1px solid wheat;
+
+      a {
+        display: inline-block;
+        margin-right: 15px;
+        border: 0.5px solid $blue;
+        padding: 8px 20px;
+        border-radius: 8px;
+        color: $textColor;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        text-shadow:
+          0 0 2px $darkblue,
+          0 0 2px $darkblue,
+          0 0 2px $darkblue,
+          0 0 2px $darkblue;
+        box-shadow: 1px 1px 3px $blue, -1px -1px 3px $blue;
+
+        &:hover {
+          box-shadow: 1px 1px 10px $blue, -1px -1px 10px $blue;
+          color: #bdf6ff;
+          text-shadow:
+            0 0 3px $blue,
+            0 0 3px $blue,
+            0 0 3px $blue,
+            0 0 3px $blue;
+        }
+      }
+
+      p {
+        display: inline-block;
+        margin-right: 20px;
+      }
+    }
+  }
+}

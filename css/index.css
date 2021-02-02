@@ -45,6 +45,12 @@ p {
 
 p.warning {
   color: #ff6767;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
 }
 
 a {
@@ -102,6 +108,19 @@ button.success {
   text-shadow: none;
   -webkit-box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
           box-shadow: 1px 1px 15px #65c6fd, -1px -1px 15px #65c6fd;
+  cursor: default;
+}
+
+button.fail {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: #ff6767;
+  color: black;
+  border: 2px solid #ff6767;
+  text-shadow: none;
+  -webkit-box-shadow: 1px 1px 15px #ff6767, -1px -1px 15px #ff6767;
+          box-shadow: 1px 1px 15px #ff6767, -1px -1px 15px #ff6767;
   cursor: default;
 }
 

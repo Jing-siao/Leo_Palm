@@ -4,7 +4,7 @@ const info = {
       <thead>
         <tr>
           <th>身份證字號</th>
-          <th>是否已建檔</th>
+          <th>狀態</th>
         </tr>
       </thead>
       <tbody>

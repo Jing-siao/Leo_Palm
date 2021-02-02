@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國眾電腦掌靜脈系統</title>
+  <link rel="stylesheet" href="./vendors/css/reset.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="appBg"></div>
+    <header>
+      <div class="logoWrap">
+        <router-link to="/">
+          <img :src="logoSrc" alt="logo">
+        </router-link>
+      </div>
+      <div class="loginWrap">
+        <div v-if="loginOutState">
+          <p>{{userName}} 歡迎回來</p>
+          <router-link to="/" @click.native="logOut">登出</router-link>
+        </div>
+          <div v-else>
+            <router-link to="/signUp">註冊</router-link>
+            <router-link to="/login">登入</router-link>
+          </div>
+      </div>
+    </header>
+    <transition name="slide" mode="out-in">
+      <router-view name="sidebar"></router-view>
+    </transition>
+    <router-view v-cloak>
+  </div>
+  <!-- <script src="./node_modules/babel-polyfill/dist/polyfill.min.js"></script> -->
+  <script src="https://kit.fontawesome.com/d18b20bddd.js" crossorigin="anonymous"></script>
+  <!-- 引入vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- 引入vue-router -->
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <!-- 引入主要js -->
+  <script type="module" src="./js/main.js"></script>
+  <!-- 引入axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</body>
+
+</html>
