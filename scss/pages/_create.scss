@@ -17,22 +17,7 @@
   }
 }
 
-//loading動畫---------
-@keyframes bounceDelay {
 
-  0%,
-  80%,
-  100% {
-    // -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-
-  40% {
-    // -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-  }
-}
 
 .createPage {
   .selectHand {
@@ -109,38 +94,8 @@
     }
   }
 
-  .warning {
-    text-align: center;
-    margin-top: 20px
-  }
-
-  //---傳送loading
-  .spinner {
-    display: inline-block;
-    margin-left: 25px;
-    text-align: center;
 
 
-    div {
-      width: 6px;
-      height: 6px;
-      background-color: $textColor;
-      border-radius: 50%;
-      display: inline-block;
-      margin: 0 3px;
-      // -webkit-animation: bounceDelay 1.4s infinite ease-in-out both;
-      animation: bounceDelay 1.4s infinite ease-in-out both;
-
-      &:first-child {
-        animation-delay: -0.32s;
-      }
-
-      &:nth-child(2) {
-        animation-delay: -0.16s;
-      }
-
-    }
-  }
 
 
 }
