@@ -2,7 +2,10 @@ const identify = {
   template: `
       <div class="identifyPage wrapBox">
         <div class="scanWrap">
-          <div :class="{'scan':isScan,'result':isResult}">{{ result }}
+          <div class="strScan" v-if="strScan" @click="strScan=!strScan">
+            <button>開始辨識</button>
+          </div>
+          <div :class="{'scan':isScan,'result':isResult}" v-else>{{ result }}
           <p class=warning v-if="noResult">查無資料</p>
           </div>    
           <div class="mask"></div>
@@ -15,6 +18,7 @@ const identify = {
       isScan: true,
       isResult: false,
       noResult: false,
+      strScan: true,
       selects: [
         {
           text: '左手',
@@ -38,9 +42,9 @@ const identify = {
         methods: "post",
         url: identifyUrl,
       }).then((response) => {
-          console.log(response);
+        console.log(response);
       }).catch((error) => {
-          console.log(error);
+        console.log(error);
       })
       setTimeout(() => {
         this.isResult = true;

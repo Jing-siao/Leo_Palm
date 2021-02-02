@@ -1,4 +1,3 @@
-
 const create = {
   template: `
       <div class="createPage wrapBox">
@@ -6,8 +5,10 @@ const create = {
         <form id="createForm" 
         @submit.prevent="createSubmit">
           <div class="animate-label">
-            <input type="text" id="userId" required autocomplete="off" v-model="userId"/>
+            <input type="text" id="userId" required autocomplete="off" v-model="userId" required
+              @change="verifyId" />
             <label for="userId">身份證字號</label>
+            <p class="warning" v-if="!isId">{{verifyErrMsg}}</p>
             <span></span>
           </div>
           <div class="selectHand">
@@ -18,61 +19,84 @@ const create = {
             </div>
           </div>
           <div class="center" v-if="sending">
-            <button :class="{'sending':isSending,'success':isSuccess}" @click.prevent>{{successText}}      
+            <button :class="{'sending':isSending,'success':isSuccess}" @click.prevent>{{resultText}}      
             </button>
           </div>
           <button class="submit" v-else>送出</button>
+          <popOut v-if="verifyFail" :msg="errMsg" @showErrMsg="isPopOut"></popOut>
         </form>
       </div> 
           `,
   data() {
     return {
-      selected: '',
-      userId: '',
-      successText: '',
+      selected: "",
+      userId: "",
+      resultText: "",
       sending: false,
       isSending: true,
       isSuccess: false,
-      warning: false,
+      isId: false,
+      verifyErrMsg: "",
       selects: [
         {
-          text: '左手',
-          radioValue: 'left',
-          radioId: 'leftHand',
-
+          text: "左手",
+          radioValue: "left",
+          radioId: "leftHand",
         },
         {
-          text: '右手',
-          radioValue: 'right',
-          radioId: 'rightHand',
-
+          text: "右手",
+          radioValue: "right",
+          radioId: "rightHand",
         },
-      ]
-    }
+      ],
+      verifyFail: false,
+      errMsg: "",
+    };
   },
   methods: {
     createSubmit() {
       let userId = this.userId;
       let selected = this.selected;
       const createUrl = "http://localhost:6101/PalmSecure/Client/Enroll/";
-      axios({
-        method: "post",
-        url: createUrl,
-        params: { id: userId },
-      }).then((response) => {
-          userId && selected ? this.sandingState() : alert('請填寫所有欄位');
-          console.log(response);
-      }).catch((error) => {
-        console.log(error);
-      })
-  
-      // 驗證後回傳是否成功
-
+      if (userId && selected && this.isId) {
+        axios({
+          method: "post",
+          url: createUrl,
+          params: { id: userId },
+        })
+          .then((response) => {
+            let parseData = JSON.parse(response.data);
+            let resultData = parseData.wParam || parseData;
+            switch (parseInt(resultData)) {
+              case 0: {
+                this.sandingState();
+                this.resultText = "成功";
+                break;
+              }
+              case 1: {
+                this.sending = false;
+                this.verifyFail = true;
+                this.errMsg = "建檔狀態:取消";
+                break;
+              }
+              case 2: {
+                this.sending = false;
+                this.errMsg = "建檔狀態:失敗";
+                break;
+              }
+              default: this.errMsg = "資料錯誤";
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        this.verifyFail = true;
+        this.errMsg = "資料格式有誤";
+      }
       // this.$router.push({ path: `/create/${userId}` })
     },
     sandingState() {
-      this.sending = true;
-      this.warning = true;
       setTimeout(() => {
         this.successState();
       });
@@ -81,20 +105,26 @@ const create = {
       }, 5000);
     },
     successState() {
+      this.sending = true;
       this.isSuccess = true;
       this.isSending = false;
-      this.successText = '成功';
-      this.warning = false;
     },
     resetState() {
-      this.userId = '';
-      this.selected = '';
-      this.successText = '';
+      this.userId = "";
+      this.selected = "";
+      this.resultText = "";
       this.sending = false;
       this.isSending = true;
       this.isSuccess = false;
-      this.warning = false;
-    }
+    },
+    verifyId() {
+      let verifyFormat = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
+      this.isId = verifyFormat.test(this.userId)
+      this.verifyErrMsg = !this.isId ? "身份證字號格式錯誤" : "";
+    },
+    isPopOut(val) {
+      this.verifyFail = val;
+    },
   }
-}
+};
 export default create;

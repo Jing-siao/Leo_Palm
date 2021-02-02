@@ -56,6 +56,28 @@
     margin: 0 auto;
     position: relative;
 
+    .strScan {
+
+      @include scanImg();
+
+      button {
+        width: 70%;
+        position: absolute;
+        top: 35%;
+        left: 15%;
+        cursor: pointer;
+        z-index: 1;
+
+        &:hover {
+          border: 2px solid $lightblue;
+          background-color: $lightblue;
+          box-shadow: 1px 1px 15px $lightblue, -1px -1px 15px $lightblue;
+          color: black;
+          text-shadow: none;
+        }
+      }
+    }
+
     div.scan {
       // border: 1px solid red;
       animation: glitch .7s infinite;

@@ -11,6 +11,7 @@ const signUp = {
             <p class="warning" v-if="!label.verifyInputData">{{label.warning}}</p>
           </div>
           <button class="submit">註冊</button>
+          <popOut v-if="verifyFail" :msg="errMsg" @showErrMsg="isPopOut"></popOut>
         </form>
       </div> 
       `,
@@ -56,12 +57,15 @@ const signUp = {
         password: "",
         checkPassword: "",
       },
+      verifyFail: false,
+      errMsg: "",
     };
   },
   methods: {
     signUpSubmit() {
       var signUpObj = this.signUpData;
       var isMember = JSON.parse(localStorage.getItem(signUpObj.id)) || [];
+      this.verifyFail = true;
       if (signUpObj.id !== isMember.id && this.signUpLabels.every(e => e.warning === "")) {
           localStorage.setItem(signUpObj.id, JSON.stringify(signUpObj));
           alert("註冊成功");
@@ -71,9 +75,12 @@ const signUp = {
             item.inputData = "";
             item.verifyInputData = true;
         });
-          alert("此身份證字號已註冊")
+          this.errMsg = "此身份證字號已註冊";
       } else 
-          alert("請填寫正確的資料格式");
+          this.errMsg = "請填寫正確的資料格式";
+    },
+    isPopOut(val) {
+      this.verifyFail = val;
     },
     verifyData(data) {
       let verifyId = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;

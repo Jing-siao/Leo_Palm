@@ -11,7 +11,8 @@ const login = {
             <p class="warning" v-if="!label.verifyInputData">{{label.warning}}</p>
           </div>
           <button class="submit">登入</button>
-        </form>
+          <popOut v-if="verifyFail" :msg="errMsg" @showErrMsg="isPopOut"></popOut>
+          </form>
       </div> 
       `,
   data() {
@@ -39,31 +40,38 @@ const login = {
         password: "",
         userName: "",
       },
+      verifyFail: false,
+      errMsg: "",
     }
   },
   methods: {
     loginSubmit() {
       var loginObj = this.loginData;
       var isMember = JSON.parse(localStorage.getItem(loginObj.id)) || [];
-      if(this.loginLabels.some(e => e.warning !== "")) 
-        alert("請填寫正確的資料格式"); 
+      this.verifyFail = true;
+      if(this.loginLabels.some(e => e.warning !== "")) {
+        this.errMsg = "請填寫正確的資料格式";
+      }
       else if(loginObj.id !== isMember.id) {
           this.loginLabels.forEach(item => {
             item.inputData = "";
             item.verifyInputData = true;
           });
-          alert("此身分證字號未註冊")
+          this.errMsg = "此身分證字號未註冊";
       } else if(loginObj.password !== isMember.password) {
           this.loginLabels.forEach(item => {
             item.inputData = "";
             item.verifyInputData = true;
           });
-          alert("密碼錯誤")
+          this.errMsg = "密碼錯誤";
       } else {
           localStorage.setItem("userName", isMember.userName)
-          alert("登入成功")
+          alert("登入成功");
           this.$router.push({ name: 'home' }) // 登入成功後自動跳轉首頁
       }
+    },
+    isPopOut(val) {
+      this.verifyFail = val;
     },
     verifyData(data) {
       let verifyId = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
@@ -77,7 +85,7 @@ const login = {
           data.verifyInputData = false;
           data.warning = !verifyPassword.test(data.inputData) ? "密碼必須由6-12位字母、數字、特殊符號組成" : "";
       } 
-    }
+    },
   }
 }
 export default login;

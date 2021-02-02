@@ -1,5 +1,7 @@
 import router from "./router.js";
+import popOut from '/js/popOut.js';
 
+Vue.component('popOut', popOut)
 new Vue({
   el: "#app",
   router,
