@@ -50,7 +50,16 @@ p {
   font-size: 18px;
 
   &.warning {
-    color: rgb(255, 103, 103);
+    color: $warningColor;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    position: absolute;
+    top: 3px;
+    left: 110px;
+    font-size: 15px;
   }
 }
 
