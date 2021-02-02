@@ -1,6 +1,0 @@
-{
-  "sass-loader": "^8.0.2",
-  "devDependencies": {
-    "babel-polyfill": "^6.26.0"
-  }
-}

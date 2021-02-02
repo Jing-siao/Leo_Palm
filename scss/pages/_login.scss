@@ -50,13 +50,6 @@
       }
     }
 
-    p.warning {
-      position: absolute;
-      top: 2px;
-      left: 120px;
-      max-width: 200px;
-      font-size: 15px;
-    }
 
     input {
       width: 97%;
@@ -67,7 +60,6 @@
       &:focus,
       &:valid {
         background: rgba(46, 132, 245, 0.1);
-
 
       }
 
