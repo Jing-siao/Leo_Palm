@@ -1,3 +1,6 @@
+import popOut from '/js/popOut.js';
+Vue.component('popOut', popOut)
+
 const login = {
   template: `
       <div class="loginPage wrapBox">
@@ -17,6 +20,9 @@ const login = {
       `,
   data() {
     return {
+      components: {
+        popOut
+      },
       loginLabels: [
         {
           title: "身份證字號",
@@ -69,6 +75,7 @@ const login = {
           alert("登入成功");
           this.$router.push({ name: 'home' }) // 登入成功後自動跳轉首頁
       }
+      // this.$emit('syncErrMsg', this.errMsg);
     },
     isPopOut(val) {
       this.verifyFail = val;
